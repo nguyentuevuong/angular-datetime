@@ -369,13 +369,13 @@ angular.module("datetime").directive("datetime", function(datetime, $log, $docum
 					break;
 				case "focus":
 					e.preventDefault();
-
+					// Remove that on keypress, that's better
 					// Init value on focus
-					if (!ngModel.$viewValue) {
-						ngModel.$setViewValue(parser.getText());
-						ngModel.$render();
-						scope.$apply();
-					}
+					//if (!ngModel.$viewValue) {
+					//	ngModel.$setViewValue(parser.getText());
+					//	ngModel.$render();
+					//	scope.$apply();
+					//}
 
 					if (!waitForClick) {
 						setTimeout(function(){
@@ -451,6 +451,12 @@ angular.module("datetime").directive("datetime", function(datetime, $log, $docum
 
 				case "keypress":
 					if (isPrintableKey(e)) {
+						// Remove from focus
+			                        if (!ngModel.$viewValue) {
+			                            ngModel.$setViewValue(parser.getText());
+			                            ngModel.$render();
+			                            scope.$apply();
+			                        }
 						setTimeout(function(){
 							range = getRange(element, parser.nodes, range.node);
 							if (isRangeAtEnd(range)) {
